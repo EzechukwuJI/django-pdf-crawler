@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'h13&5^9m(_#203ux3pfv&5q*bvpn5r5x2t0z0dgy4(h9+$$c6c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','pypdfcrawler.herokuapp.com']
