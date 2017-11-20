@@ -39,5 +39,7 @@ class WebUrl(models.Model):
 		return '{} - {}'.format(self.url_string, self.http_response_status)
 
 
-
+class TemporaryFile(models.Model):
+	file         =   models.FileField(upload_to= "file/pdf")
+	related_to   =   models.ForeignKey(UploadedFile, related_name="temporary_file")
 

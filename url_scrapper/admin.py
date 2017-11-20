@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from url_scrapper.models import WebUrl, UploadedFile
+from url_scrapper.models import WebUrl, UploadedFile, TemporaryFile
 
 # Register your models here.
 
@@ -10,3 +10,4 @@ from url_scrapper.models import WebUrl, UploadedFile
 
 admin.site.register(WebUrl)
 admin.site.register(UploadedFile)
+admin.site.register(TemporaryFile)

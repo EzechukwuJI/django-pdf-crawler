@@ -13,10 +13,14 @@
 	{% endif %}
 	<div style="padding: 40px;">
 		<h3>Other Actions </h3>
-		<a href="{% url 'url_scrapper:fetch-parsed-file' %}"> Get all Uploaded Files</a>
+		<a href="{% url 'url_scrapper:fetch-parsed-file' 'rest' %}"> Get all Parsed Files (REST)</a>
 		<br>
 		<br>
-		<a href="{% url 'url_scrapper:fetch-all-urls' %}"> Get all Url</a>
+		<a href="{% url 'url_scrapper:fetch-parsed-file' 'html' %}"> Get all Parsed Files (HTML)</a>
+		<br>
+		<br>
+		<a href="{% url 'url_scrapper:fetch-all-urls'  %}"> Get all Urls (REST)</a>
+		
 	</div>
 	<div style="padding: 30px;">
 		<form action="" method="post" enctype="multipart/form-data">
@@ -24,12 +28,28 @@
 			<fieldset>
 				<legend>Select File to scrap contents (Only pdf files are allowed)</legend>
 				<input type="file" name="pdf_file" type="*.pdf(*.pdf)" required>
+
 				<br>
 				<br>
 				<br>
 				<input type="submit" value ="Extract file content" name="extract_content">
 			</fieldset>
 		</form>
+		{% if all_files %}
+			<h4>Select File To View Urls</h4>
+			<div>
+				{% for file in all_files %}	
+					<a href="{% url 'url_scrapper:fetch-doc-urls' file.slug %}">{{ file.filename}} </a>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+	<div style="padding: 30px;">
+		{% if url_list %}
+			{% for url in url_list %}
+				<a href="{{url}}">{{ url }}</a><br>
+			{% endfor %}
+		{% endif %}
 	</div>
 </body>
 </html>

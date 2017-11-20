@@ -8,12 +8,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 
-from url_scrapper.models import WebUrl, UploadedFile
+from url_scrapper.models import WebUrl, UploadedFile, TemporaryFile
 from url_scrapper.utils import extract_urls_from_pdf, ext_type_is_valid, check_url_status
 
 from rest_framework import viewsets, generics
 from url_scrapper.serializers import WebUrlSerializer, UploadedFileSerializer
-import json
+
 
 
 
@@ -23,14 +23,18 @@ def parseFileView(request):
 	context = {}
 	if request.method == "POST":
 		if ext_type_is_valid(request.FILES['pdf_file'].name, 'pdf'):
+
 			# create new Uploaded file object
 			file_obj, is_created = UploadedFile.objects.get_or_create(filename = request.FILES['pdf_file'].name)
+			temp_file_holder  =  TemporaryFile.objects.create(file = request.FILES['pdf_file'], related_to = file_obj)
 			if is_created:
-				url_list = extract_urls_from_pdf('/home/hypermatrix/Desktop/django rest.pdf') 
+				url_list = extract_urls_from_pdf(temp_file_holder.file.url) 
 				for url in url_list:
 					is_live, status_code = check_url_status(url)
 					url_obj = WebUrl.objects.create(url_string = url,http_response_status = status_code, is_live = is_live, file_attached = file_obj)
 				context['url_list'] = url_list
+
+				temp_file_holder.delete() 
 			else:
 				context['url_list'] = file_obj.get_urls()
 				messages.info(request, "This file has been parsed")
@@ -47,17 +51,17 @@ class DisplayParsedFile(generics.ListCreateAPIView):
 
 
 	def get_queryset(self):
+		output_type = self.kwargs['output_type']
 		return self.queryset.annotate(total_urls = Count('web_url'))
 
 	
-	
+
 class FetchAllUrls(generics.ListCreateAPIView):
 	queryset = WebUrl.objects.all().select_related().distinct()
 	serializer_class  =  WebUrlSerializer
 
 	def get_queryset(self):
 		return self.queryset.annotate(doc_count = Count('file_attached'))
-
 
 	
 class FetchDocUrls(generics.ListCreateAPIView):
