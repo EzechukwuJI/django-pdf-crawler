@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pdf Web scrapper</title>
+</head>
+<body>
+	{% if messages %}
+		<div style="padding: 30px;">
+			{% for msg in messages %}
+				<div>{{ msg }}</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+	<div style="padding: 40px;">
+		<h3>Other Actions </h3>
+		<a href="{% url 'url_scrapper:fetch-parsed-file' %}"> Get all Uploaded Files</a>
+		<br>
+		<br>
+		<a href="{% url 'url_scrapper:fetch-all-urls' %}"> Get all Url</a>
+	</div>
+	<div style="padding: 30px;">
+		<form action="" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<fieldset>
+				<legend>Select File to scrap contents (Only pdf files are allowed)</legend>
+				<input type="file" name="pdf_file" type="*.pdf(*.pdf)" required>
+				<br>
+				<br>
+				<br>
+				<input type="submit" value ="Extract file content" name="extract_content">
+			</fieldset>
+		</form>
+	</div>
+</body>
+</html>
