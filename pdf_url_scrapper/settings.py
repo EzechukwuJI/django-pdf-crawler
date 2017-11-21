@@ -27,7 +27,7 @@ SECRET_KEY = 'h13&5^9m(_#203ux3pfv&5q*bvpn5r5x2t0z0dgy4(h9+$$c6c'
 DEBUG = True
 # DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','pypdfcrawler.herokuapp.com']
+ALLOWED_HOSTS = ['0.0.0.0:5000','localhost','127.0.0.1','pypdfcrawler.herokuapp.com']
 
 
 # Application definition
