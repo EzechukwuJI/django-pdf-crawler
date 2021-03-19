@@ -4,7 +4,7 @@ cssselect==1.0.1
 dj-database-url==0.4.2
 Django==1.11.7
 django-rest-framework==0.1.0
-djangorestframework==3.7.3
+djangorestframework==3.11.2
 gunicorn==19.7.1
 idna==2.6
 lxml==4.1.1
