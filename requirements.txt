@@ -7,7 +7,7 @@ django-rest-framework==0.1.0
 djangorestframework==3.7.3
 gunicorn==19.7.1
 idna==2.6
-lxml==4.1.1
+lxml==4.9.1
 pdfminer==20140328
 pdfminer2==20151206
 pdfquery==0.4.3
